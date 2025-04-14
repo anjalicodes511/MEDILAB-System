@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDILAB</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nerko+One&family=New+Amsterdam&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/login.css">
+  </head>
+  <body>
+    <div class="medilab-header">
+      <div class="medilab-header-left-section">
+        <button onclick="location.href='login.html'"class="home-page-link">
+          <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" fill="#5f6368"><path d="M160-120v-480l320-240 320 240v480H560v-280H400v280H160Z"/></svg></button>
+          <div class="home-name-tool">HOME</div>
+      </div>
+      <div class="medilab-header-middle-section">
+        <p class="medilab-app-name">M E D I L A B</p>
+      </div>
+    </div>
+    <div class="login-details-container">
+      <div class="login-signup-container">
+        <div class="login-text">
+          <h1 class="login">LOG-IN Details</h1>
+        </div>
+        <div class="spacer"></div>
+        <div class="input-as">
+          <span class="input-as-text">Log-In As:</span>
+          <select class="input-as-selected">
+            <option selected value=""></option>
+            
+            <option value="admin">ADMIN</option>
+            <option value="lab-staff">LABORATORY STAFF</option>
+            <option value="dis-staff">DISPENSARY STAFF</option>
+            <option value="doc">DOCTOR</option>
+          </select>
+        </div>
+        
+        <div class="input-fields">
+          <span class="email">E-Mail:</span>
+          <input type="email" class="email js-email" aria-label="Email" placeholder="Type your E-Mail here...." required>
+        </div>
+        <div class="input-fields">
+          <span class="password">Password:</span>
+          <input type="password" class="email js-password" placeholder="Type your Password here...." required>
+        </div>
+        <div class="login-input1-button">
+          <button class="login-button">LOGIN</button>
+        </div>
+      </div>
+
+
+
+    </div>
+    <script type="module" src="scripts/login-page.js"></script>
+  </body>
+</html>

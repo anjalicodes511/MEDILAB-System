@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles/admin-dashboard.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f4f8; /* Light blue background for a clean look */
+            display: flex;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #004d40;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            transition: left 0.3s;
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .logout-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+            background-color: #f0f0f0;
+            overflow-y: auto;
+        }
+
+        .section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #b30000;
+        }
+
+        /* Other styles */
+        h1 {
+            color: #004d40;
+        }
+        h2{
+            color:#ddd
+        }
+        .doctor-card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Dashboard</h2>
+                <button id="toggleSidebar">☰</button>
+            </div>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#recent-payments">Payments</a></li>
+                <li><a href="#patient-details">Patients</a></li>
+                <li><a href="#add-doctor">Add Doctor/Staff</a></li>
+                <li><a href="#calendar">Calendar</a></li>
+            </ul>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Welcome, Admin</h1>
+                <p>Welcome, <span id="user-name"></span>!</p>
+            </header>
+
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2>Overview</h2>
+                <div class="overview-cards">
+                    <div class="card">
+                        <h3>Total Patients</h3>
+                        <p id="totalPatients">4</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Doctors</h3>
+                        <p id="totalDoctors">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Appointments Today</h3>
+                        <p> 120</p>
+                    </div>
+                    <div class="card">
+ <h3>Staff Present</h3>
+                        <p>85%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add Patient Section -->
+            <section id="add-patient" class="section">
+                <h2>Add Patient</h2>
+                <form id="addPatientForm">
+                    <input type="text" id="patientName" placeholder="Patient Name" required>
+                    <input type="number" id="patientAge" placeholder="Age" required>
+                    <input type="text" id="patientCondition" placeholder="Condition" required>
+                    <input type="date" id="lastVisit" placeholder="Admission Date" required>
+                    <button type="submit">Add Patient</button>
+                </form>
+            </section>
+
+            <!-- Add Doctor/Staff Section -->
+            <section id="add-doctor" class="section">
+                <h2>Add Doctor/Staff</h2>
+                <form id="addDoctorForm">
+                    <input type="text" id="doctorName" placeholder="Doctor/Staff Name" required>
+                    <input type="text" id="doctorSpecialty" placeholder="Specialty" required>
+                    <input type="number" id="doctorAge" placeholder="Age" required>
+                    <button type="submit">Add Doctor/Staff</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Doctor/Staff Name</th>
+                            <th>Specialty</th>
+                            <th>Age</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="doctorTableBody">
+                        <tr>
+                            <td>Dr. John Smith</td>
+                            <td>Cardiologist</td>
+                            <td>45</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Emily Davis</td>
+                            <td>Pediatrician</td>
+                            <td>38</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Nurse Sarah Brown</td>
+                            <td>Registered Nurse</td>
+                            <td>30</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Lisa White</td>
+                            <td>Dermatologist</td>
+                            <td>42</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Dr. Jennifer Taylor</td>
+                            <td>Neurologist</td>
+                            <td>36</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Patient Details Section -->
+            <section id="patient-details" class="section">
+                <h2>Patient Details</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Age</th>
+                            <th>Condition</th>
+                            <th>Admission Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+                        <tr>
+                            <td>Anna Johnson</td>
+                            <td>32</td>
+                            <td>High Blood Pressure</td>
+                            <td>2024-10-15</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Michael Lee</td>
+                            <td>45</td>
+                            <td>Diabetes</td>
+                            <td>2024-10-18</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>Sara Park</td>
+                            <td>29</td>
+                            <td>Allergies</td>
+                            <td>2024-10-20</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>50</td>
+                            <td>Asthma</td>
+                            <td>2024-10-22</td>
+                            <td><button class="delete-button">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Calendar Section -->
+            <section id="calendar" class="section">
+                <h2>Calendar</h2>
+                <div id="calendar-container">
+                    <div id="calendar-header">
+                        <button id="prevMonth">&lt;</button>
+                        <span id="currentMonthYear"></span>
+                        <button id="nextMonth">&gt;</button>
+                    </div>
+                    <table id="calendar-table">
+                        <thead>
+                            <tr>
+                                <th>Sun</th>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendar-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script>
+        // Calendar functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarContainer = document.getElementById("calendar-container");
+            const calendarBody = document.getElementById("calendar-body");
+            const currentMonthYear = document.getElementById("currentMonthYear");
+            const prevMonthButton = document.getElementById("prevMonth");
+            const nextMonthButton = document.getElementById("nextMonth");
+
+            let today = new Date();
+            let currentMonth = today.getMonth();
+            let currentYear = today.getFullYear();
+
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            function renderCalendar(month, year) {
+                calendarBody.innerHTML = "";
+                currentMonthYear.textContent = `${monthNames[month]} ${year}`;
+
+                const firstDay = new Date(year, month).getDay();
+                const daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+                let date = 1;
+                for (let i = 0; i < 6; i++) {
+                    let row = document.createElement("tr");
+
+                    for (let j = 0; j < 7; j++) {
+                        let cell = document.createElement("td");
+                        if (i === 0 && j < firstDay) {
+                            cell.classList.add("empty-cell");
+                        } else if (date > daysInMonth) {
+                            break;
+                        } else {
+                            cell.textContent = date;
+                            cell.classList.add("date-cell");
+                            // Example: mark today
+                            if (
+                                date === today.getDate() &&
+                                year === today.getFullYear() &&
+                                month === today.getMonth()
+                            ) {
+                                cell.classList.add("today");
+                            }
+                            date++;
+                        }
+                        row.appendChild(cell);
+                    }
+                    calendarBody.appendChild(row);
+                }
+            }
+
+            prevMonthButton.addEventListener("click", () => {
+                currentMonth = (currentMonth - 1 + 12) % 12;
+                if (currentMonth === 11) currentYear--;
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            nextMonthButton.addEventListener("click", () => {
+                currentMonth = (currentMonth + 1) % 12;
+                if (currentMonth === 0) currentYear++;
+                renderCalendar(currentMonth, currentYear);
+            });
+
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        // Toggle sidebar function
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Load doctor name from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            let userName = localStorage.getItem('userName') || 'Admin';
+            document.getElementById('user-name').textContent = userName;
+        });
+
+        // Add Patient functionality
+        document.getElementById("addPatientForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const name = document.getElementById("patientName").value;
+            const age = document.getElementById("patientAge").value;
+            const condition = document.getElementById("patientCondition").value;
+            const lastVisit = document.getElementById("lastVisit").value;
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${name}</td><td>${age}</td><td>${condition}</td><td>${lastVisit}</td><td><button class="delete-button">Delete</button></td>`;
+            document.getElementById("patientTableBody").appendChild(newRow);
+
+            // Update total patients count
+            const totalPatients = document.getElementById("totalPatients");
+            totalPatients.textContent = parseInt(totalPatients.textContent) + 1;
+
+            // Clear the form
+            document.getElementById("addPatientForm").reset();
+
+            // Add delete functionality to the new row
+            newRow.querySelector(".delete-button").addEventListener("click", function () {
+                newRow.remove();
+                totalPatients.textContent = parseInt(totalPatients.textContent) - 1;
+            });
+        });
+
+        // Add Doctor functionality
+        document.getElementById("addDoctorForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const name = document.getElementById("doctorName").value;
+            const specialty = document.getElementById("doctorSpecialty").value;
+            const age = document.getElementById("doctorAge").value;
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${name}</td><td>${specialty}</td><td>${age}</td><td><button class="delete-button">Delete</button></td>`;
+            document.getElementById("doctorTableBody").appendChild(newRow);
+
+            // Update total doctors count
+            const totalDoctors = document.getElementById("totalDoctors");
+            totalDoctors.textContent = parseInt(totalDoctors.textContent) + 1;
+
+            // Clear the form
+            document.getElementById("addDoctorForm").reset();
+
+            // Add delete functionality to the new row
+            newRow.querySelector(".delete-button").addEventListener("click", function () {
+                newRow.remove();
+                totalDoctors.textContent = parseInt(totalDoctors.textContent) - 1;
+            });
+        });
+
+        // Delete functionality for existing patients
+        document.querySelectorAll(".delete-button").forEach(button => {
+            button.addEventListener("click", function () {
+                const row = button.closest("tr");
+                row.remove();
+                const totalPatients = document.getElementById("totalPatients");
+                totalPatients.textContent = parseInt(totalPatients.textContent) - 1;
+            });
+        });
+
+        // Logout functionality
+        document.querySelector('.logout-button').addEventListener('click', () => {
+            location.href = 'login.html';
+        });
+
+        // Delete functionality for payments
+        document.querySelectorAll("#paymentsTableBody .delete-button").forEach(button => {
+            button.addEventListener("click", function () {
+                const row = button.closest("tr");
+                row.remove();
+            });
+        });
+    </script>
+</body>
+</html>

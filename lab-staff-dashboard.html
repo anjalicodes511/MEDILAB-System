@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory Staff Dashboard</title>
+    <link rel="stylesheet" href="styles/lab-staff-dashboard.css">
+</head>
+<body>
+    <div class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <h2>Laboratory Tools</h2>
+        <button class="opt-but" onclick="showSection('test-requests')">View Test Requests</button>
+        <button class="opt-but" onclick="showSection('test-results')">View Test Results</button>
+        <button class="opt-but" onclick="showSection('upload-test-reports')">Upload Test Reports</button>
+        <button class="opt-but" onclick="showSection('manage-inventory')">Manage Inventory</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <button class="open-btn" onclick="toggleSidebar()">☰</button>
+            <h1 id="welcome-message">Welcome, Laboratory Staff</h1>
+            <p>Welcome, <span id="user-name"></span>!</p>
+        </div>
+
+        <div class="content">
+            <div class="background-box">
+                <!-- Test Requests Section -->
+                <div class="test-requests-container" id="test-requests" style="display: block;">
+                    <div class="test-requests-header">Test Requests</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Test</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="test-requests-list">
+                            <!-- Dynamic test requests list will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Test Results Section -->
+                <div class="test-results-container" id="test-results" style="display: none;">
+                    <div class="test-results-header">Test Results</div>
+                    <div id="test-results-list">
+                        <!-- Dynamic test results list will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Upload Test Reports Section -->
+                <div class="upload-test-reports-container" id="upload-test-reports" style="display: none;">
+                    <div class="upload-test-reports-header">Upload Test Reports</div>
+                    <form class="upload-test-reports-form" id="upload-test-reports-form">
+                        <input type="text" placeholder="Patient's Name" id="patient-name" required>
+                        <input type="text" placeholder="Test Name" id="test-name" required>
+                        <input type="file" accept="application/pdf, application/msword" id="test-report-file" required>
+                        <button type="submit">Upload Test Report</button>
+                    </form>
+                    <div id="upload-message"></div>
+                </div>
+
+                <!-- Manage Inventory Section -->
+                <div class="manage-inventory-container" id="manage-inventory" style="display: none;">
+                    <div class="manage-inventory-header">Manage Inventory</div>
+                    <div id="inventory-list">
+                        <!-- Dynamic inventory list will be populated here -->
+                    </div>
+                    <button onclick="addInventoryItem()">Add Inventory Item</button>
+                </div>
+
+                <!-- Laboratory Schedule Section -->
+                <div class="laboratory-schedule-container" id="laboratory-schedule" style="display: none;">
+                    <div class="laboratory-schedule-header">Laboratory Schedule</div>
+                    <div id="schedule-list">
+                        <!-- Dynamic schedule list will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle sidebar function
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // Show specific section
+        function showSection(section) {
+            const sections = ['test-requests', 'test-results', 'upload-test-reports', 'manage-inventory', 'laboratory-schedule'];
+            sections.forEach(sec => {
+                document.getElementById(sec).style.display = (sec === section) ? 'block' : 'none';
+            });
+        }
+
+        // Load user name from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            let userName = localStorage.getItem('userName') || 'Laboratory Staff';
+            document.getElementById('user-name').textContent = userName;
+
+            // Sample test requests data with real patient names
+            const testRequests = [
+                { patient: 'John Doe', test: 'Blood Test', status: 'Pending' },
+                { patient: 'Jane Smith', test: 'Urine Test', status: 'In-progress' },
+                { patient: 'Emily Johnson', test: 'X-Ray', status: 'Completed' }
+            ];
+
+            // Populate test requests
+            const testRequestsList = document.getElementById('test-requests-list');
+            testRequests.forEach(req => {
+                const requestRow = document.createElement('tr');
+                requestRow.innerHTML = `
+                    <td>${req.patient}</td>
+                    <td>${req .test}</td>
+                    <td>
+                        <select onchange="changeStatus(this, '${req.patient}', '${req.test}')">
+                            <option value="Pending" ${req.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="In-progress" ${req.status === 'In-progress' ? 'selected' : ''}>In-progress</option>
+                            <option value="Completed" ${req.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteRequest('${req.patient}')">Delete</button>
+                    </td>
+                `;
+                testRequestsList.appendChild(requestRow);
+            });
+
+            // Sample test results data
+            const testResults = [
+                { patient: 'Emily Johnson', test: 'X-Ray', result: 'No Issues', interpretation: 'Normal findings, no abnormalities detected.' },
+                { patient: 'John Doe', test: 'Blood Test', result: 'Normal', interpretation: 'All values within normal range.' }
+            ];
+
+            // Populate test results
+            const testResultsList = document.getElementById('test-results-list');
+            testResults.forEach(result => {
+                const resultDiv = document.createElement('div');
+                resultDiv.className = 'detailed-results';
+                resultDiv.innerHTML = `
+                    <strong>Patient:</strong> ${result.patient}<br>
+                    <strong>Test:</strong> ${result.test}<br>
+                    <strong>Result:</strong> ${result.result}<br>
+                    <strong>Interpretation:</strong> ${result.interpretation}<br>
+                    <button class="generate-report-btn" onclick="generateReport('${result.patient}', '${result.test}', '${result.result}', '${result.interpretation}')">Generate Report</button>
+                `;
+                testResultsList.appendChild(resultDiv);
+            });
+
+            // Handle test report upload
+            const uploadForm = document.getElementById('upload-test-reports-form');
+            uploadForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const patientName = document.getElementById('patient-name').value;
+                const testName = document.getElementById('test-name').value;
+                document.getElementById('upload-message').textContent = `Test report for ${patientName} - ${testName} uploaded successfully!`;
+                uploadForm.reset();
+            });
+
+            // Handle inventory management
+            const inventoryList = document.getElementById('inventory-list');
+            const inventoryItems = [
+                { item: 'Blood Test Kits', quantity: 50 },
+                { item: 'Urine Test Kits', quantity: 30 }
+            ];
+
+            inventoryItems.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'inventory-item';
+                itemDiv.innerHTML = `${item.item} - Quantity: <input type="number" value="${item.quantity}" min="0"> 
+                <button class="status-btn" onclick="updateInventory('${item.item}')">Update</button>`;
+                inventoryList.appendChild(itemDiv);
+            });
+        });
+
+        // Change status function
+        function changeStatus(select, patient, test) {
+            const newStatus = select.value;
+            alert(`Status for ${patient} - ${test} changed to ${newStatus}`);
+        }
+
+        // Delete test request function
+        function deleteRequest(patient) {
+            const testRequestsList = document.getElementById('test-requests-list');
+            const rows = testRequestsList.getElementsByTagName('tr');
+            for (let row of rows) {
+                if (row.cells[0].textContent === patient) {
+                    testRequestsList.removeChild(row);
+                    alert(`Deleted test request for ${patient}`);
+                    break;
+                }
+            }
+        }
+
+        // Add inventory item function
+        function addInventoryItem() {
+            const itemName = prompt("Enter the inventory item name:");
+            const itemQuantity = prompt("Enter the quantity:");
+            if (itemName && itemQuantity) {
+                const inventoryList = document.getElementById('inventory-list');
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'inventory-item';
+                itemDiv.innerHTML = `${itemName} - Quantity: <input type="number" value="${itemQuantity}" min="0"> 
+                <button class="status-btn" onclick="updateInventory('${itemName}')">Update</button>`;
+                inventoryList.appendChild(itemDiv);
+            }
+        }
+
+        // Update inventory function
+        function updateInventory(itemName) {
+            const inventoryList = document.getElementById('inventory-list');
+            const items = inventoryList.getElementsByClassName('inventory-item');
+            for (let item of items) {
+                if (item.innerHTML.includes(itemName)) {
+                    const quantityInput = item.querySelector('input[type="number"]');
+                    alert(`Updated ${itemName} quantity to ${quantityInput.value}`);
+                    break;
+                }
+            }
+        }
+
+        // Generate report function
+        function generateReport(patient, test, result, interpretation) {
+            const reportContent = `
+                Test Report
+                ------------
+                Patient: ${patient}
+                Test: ${test}
+                Result: ${result}
+                Interpretation: ${interpretation}
+            `;
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${patient}_${test}_Report.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('Report generated successfully!');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.clear();
+            location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

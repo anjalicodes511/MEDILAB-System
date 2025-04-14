@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif; /* Updated font */
+  margin: 0;
+  padding: 0;
+  background-color: #e8f4f8;
+  display: flex;
+  height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #1e1e1e; /* Dark mode background */
+  color: #e8eaed; /* Light text for dark mode */
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background-color: #004d40; /* Semi-transparent background */
+  color: white;
+  transition: left 0.3s ease; /* Smooth slide in/out */
+  padding-top: 3rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column; /* Align items in a column */
+  align-items: center; /* Center align items horizontally */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+.close-btn {
+  border: none;               /* Removes the border */
+  padding: 1rem;              /* Adds padding around the button */
+  background: transparent;   /* Makes the background transparent */
+  color: inherit;             /* Inherits text color from parent */
+  cursor: pointer;            /* Changes cursor to pointer */
+  font-size: 2rem;            /* Makes the cross bigger */
+  display: flex;              /* Uses flex layout */
+  align-items: center;        /* Centers content vertically */
+  justify-content: center;    /* Centers content horizontally */
+  position: absolute;         /* Allows positioning relative to parent */
+  top: 0;                     /* Aligns with the top of the parent */
+  right: 0;                   /* Aligns with the right side of the parent */
+  margin: 1rem;               /* Optional: Adds space from the edges */
+}
+.sidebar.active {
+  left: 0; /* Sidebar appears */
+  z-index: 100000;
+}
+
+.main-content {
+  margin-left: 0; /* Default margin */
+  transition: margin-left 0.3s ease; /* Smooth transition when sidebar opens */
+}
+
+.sidebar.active + .main-content {
+  margin-left: 250px; /* Push main content to the right when sidebar is active */
+}
+
+.opt-but {
+  width: 90%; /* Make buttons take most of the sidebar width */
+  margin: 0.5rem auto; /* Center buttons */
+  text-align: left; /* Align text to the left */
+  padding-left: 1rem; /* Space for icons */
+  display: block;
+  align-items: center; /* Align icon and text */
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center; /* Center text within the button */
+  margin: 0.5rem auto; /* Auto margins to center */
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  width: 80%; /* Fixed width for buttons */
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.opt-but:hover {
+  background-color: #00695c; /* Subtle color change */
+  transform: translateY(-3px); /* Lift effect */
+}
+
+.logout-btn {
+  background-color: red;
+  color: white;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  width: calc(100%);
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 45px;
+  left: 0;
+}
+
+.logout-btn:hover {
+  background-color: #b30000;
+}
+
+.main-content {
+  margin-left: 0; /* Reset margin for full-width header */
+  flex: 1;
+  transition: margin-left 0.3s;
+  padding: 2rem; /* Added padding */
+  width: 100%;
+  overflow-y: auto; /* Scrollable content */
+}
+
+.sidebar.active + .main-content {
+  margin-left: 250px; /* Push main content to the right when sidebar is active */
+}
+
+.header {
+  background-color: #004d40;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  position: fixed; /* Make header fixed */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width for header */
+  z-index: 1000; /* Ensure it's above content */
+  display: flex; /* Flexbox for alignment */
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header .header-center {
+  flex-grow: 1;
+  text-align: center; /* Center align the header content */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.8rem; /* Adjusted font size */
+}
+
+.header p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.header .open-btn {
+  background: none;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.task-container {
+  margin: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-top: 100px; /* Add margin-top to avoid overlap with the fixed header */
+}
+
+.task-container:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.task-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.task {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: white;
+  border-left: 4px solid #2980b9;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task .time {
+  font-weight: bold;
+}
+
+.task .details {
+  margin-left: 10px;
+}
+
+body.dark-mode .task-container,
+body.dark-mode .task {
+  background-color: #2e2e2e; /* Dark mode background for tasks */
+  color: #e8eaed;
+}
+
+.dark-mode-toggle {
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+.dark-mode-toggle {
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0.5rem 4rem;
+  transition: 0.3s;
+}
+.dark-mode-toggle:hover {
+  color: #ffeb3b; /* Highlighted color for dark mode toggle */
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Inventory Management</title>
+    <link rel="stylesheet" href="./styles/manage-inventorystyle.css">
+</head>
+
+<body>
+    <header>
+        <h1>Medicine Inventory Management</h1>
+        <!-- Icons for Filter and Cart -->
+        <div id="instruction" class="instructions">
+            Click on items marked as "Low Stock" or "Out of Stock" to add them to your cart.
+        </div>
+        <div class="icons">
+            <span id="filterIcon" class="icon">🔍 Filter</span>
+            <span id="cartIcon" class="icon">🛒 Cart (0)</span>
+        </div>
+
+
+    </header>
+
+    <!-- Filter Dropdown -->
+    <div id="filterDropdown" class="filter-dropdown hidden">
+        <button data-filter="all">All</button>
+        <button data-filter="in-stock">In Stock</button>
+        <button data-filter="low-stock">Low Stock</button>
+        <button data-filter="out-of-stock">Out of Stock</button>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal hidden">
+        <h2>Cart Items</h2>
+        <ul id="cartItems"></ul>
+        <div class="modal-buttons-container"></div>
+        <button id="buyItems" class="buy-button ">Buy Items</button>
+        <button id="closeCart">Close</button>
+    </div>
+    </div>
+
+    <main>
+        <input type="text" id="searchInput" placeholder="Search by name or ID...">
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Shelf Life</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+
+    <script src="./scripts/manage-inventoryscript.js"></script>
+</body>
+
+</html>

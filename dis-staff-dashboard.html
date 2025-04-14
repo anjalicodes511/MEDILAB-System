@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispensary Staff Dashboard</title>
+    <link rel="stylesheet" href="styles/dis-staff-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <h2>Dispensary Tools</h2>
+        <button class="opt-but" onclick="location.href='manage-inventory.html'">
+            📦 Manage Inventory
+        </button>
+        <button class="opt-but" onclick="location.href='process-orders.html'">
+            📝 Billing
+        </button>
+        <button class="opt-but" onclick="location.href='view-suppliers.html'">
+            🔍 View Orders
+        </button>
+        <button class="opt-but" onclick="location.href='report-issues.html'">
+            ⚠️ Report Issues
+        </button>
+        <button class="logout-btn" onclick="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z" />
+            </svg> Logout
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <button class="open-btn" onclick="toggleSidebar()">☰</button>
+            <div class="header-center">
+                <h1 id="welcome-title">Dispensary Staff</h1>
+                <p id="welcome-message">Welcome, <span id="user-name"></span>!</p>
+            </div>
+            <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+        </div>
+
+        <div class="content">
+
+
+            <!-- Tasks Section -->
+            <div class="task-container">
+                <div class="task-header">Today's Tasks</div>
+                <div id="tasks-list">
+                    <!-- Dynamic tasks list will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include external JavaScript file -->
+    <script src="scripts/dis-staff-dashboard.js"></script>
+</body>
+
+</html>

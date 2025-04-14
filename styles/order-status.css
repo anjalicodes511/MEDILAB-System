@@ -1,0 +1,121 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: 0;
+}
+
+.back-button {
+  padding: 8px 16px;
+  background: #004d40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background: #00695c;
+}
+
+/* Order item styling */
+.order-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.order-item h2 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.order-item p {
+  margin: 5px 0;
+}
+
+.order-item ul {
+  padding-left: 20px;
+  margin: 10px 0;
+}
+
+.order-item ul li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+/* Buttons */
+.actions {
+  margin-top: 10px;
+}
+
+.cancel-button,
+.return-button {
+  padding: 8px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.cancel-button {
+  background: #d32f2f;
+  color: white;
+}
+
+.cancel-button:hover {
+  background: #b71c1c;
+}
+
+.return-button {
+  background: #1976d2;
+  color: white;
+}
+
+.return-button:hover {
+  background: #0d47a1;
+}
+
+/* No orders message */
+.order-list p {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+/* Status Colors */
+.status-pending {
+  color: #f39c12;
+}
+
+.status-canceled {
+  color: #e91e63;
+}
+
+.status-returned {
+  color: #4caf50;
+}
+
+.status-shipped {
+  color: #2980b9;
+}

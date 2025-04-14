@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="styles/doctor-dashboard.css">
+    <style>
+        /* Add your existing styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f4f8; /* Light blue background for a clean look */
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            height: 80%; /* Adjusted height to 80% of the viewport */
+            width: 250px;
+            position: fixed;
+            top: 10%; /* Centering the sidebar vertically */
+            left: -250px;
+            background-color: #004d40; /* Dark teal for sidebar */
+            color: white;
+            transition: 0.3s;
+            overflow-x: hidden;
+            padding-top: 3rem; /* Increased padding-top for space */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin: 0;
+            padding-top: 2rem; /* Added padding to push title down */
+        }
+
+        .opt-but {
+            display: block;
+            background-color: #00796b; /* Teal color for buttons */
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            text-align: center;
+            margin: 0.5rem auto;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            width: calc(100% - 2rem);
+            box-sizing: border-box;
+        }
+
+        .opt-but:hover {
+            background-color: #004d40; /* Darker teal for hover effect */
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: red;
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: auto; /* Pushes the button to the bottom */
+            width: 100%; /* Makes the button cover the entire width */
+            position: absolute;
+            bottom: 0; /* Aligns the button to the bottom of the sidebar */
+        }
+
+        .logout-btn:hover {
+            background-color: #b30000;
+        }
+
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s;
+            flex: 1;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .header {
+            background-color: #004d40; /* Matching header color with sidebar */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .header .open-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header button {
+            background-color: #00796b; /* Matching button color with sidebar */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .header button:hover {
+            background-color: #004d40; /* Matching hover color with sidebar button hover */
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        /* Additional styling for sections */
+        .section {
+            background-color: white; /* White background for sections */
+            border-radius: 0.5rem; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0 , 0.1); /* Subtle shadow */
+            padding: 1.5rem; /* Padding for content */
+            margin-bottom: 2rem; /* Space between sections */
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #00796b;
+            color: white;
+        }
+
+        .status-select {
+            width: 100px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .delete-btn:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <h2>Doctor Tools</h2>
+        <button class="opt-but" onclick="showSection('appointments')">View Today's Appointments</button>
+        <button class="opt-but" onclick="showSection('upload-prescription')">Upload Prescription</button>
+        <button class="opt-but" onclick="showSection('calendar')">Calendar</button>
+        <button class="opt-but" onclick="showSection('view-patients')">View Patients</button>
+        <button class="opt-but" onclick="location.href='view-test-reports.html'">View Test Reports</button>
+        <button class="logout-btn" onclick="logout()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg> Logout</button>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <button class="open-btn" onclick="toggleSidebar()">☰</button>
+            <h1 id="welcome-message">Welcome, Doctor</h1>
+            <p>Welcome, <span id="user-name"></span>!</p>
+        </div>
+
+        <div class="content">
+            <!-- Schedule Section -->
+            <div class="schedule-container section" id="appointments">
+                <div class="schedule-header">Today's Schedule</div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Patient's Name</th>
+                            <th>Reason for Consultation</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-list">
+                        <!-- Dynamic appointment list will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Upload Prescription Section -->
+            <div class="upload-prescription-container section" id="upload-prescription">
+                <div class="upload-prescription-header">Upload Prescription</div>
+                <form class="upload-prescription-form" id="upload-prescription-form">
+                    <input type="text" placeholder="Patient Name" required>
+                    <input type="file" accept="image/*" id="prescription-image" required>
+                    <img id="image-preview" class="image-preview" alt="Image Preview" style="display:none;">
+                    <button type="submit">Upload Prescription</button>
+                </form>
+                <div id="upload-message"></div>
+            </div>
+
+            <!-- View Patients Section -->
+            <div class="view-patients-container section" id="view-patients">
+                <div class="view-patients-header">View Patients</div>
+                <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Condition</th>
+                        <th>Appointment Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="patients-list">
+                    <!-- Dynamic patient list will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Calendar Section -->
+        <div class="calendar-container section" id="calendar">
+            <h2>Calendar</h2>
+            <div id="calendar-container">
+                <div id="calendar-header">
+                    <button id="prevMonth">&lt;</button>
+                    <span id="currentMonthYear"></span>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <table id="calendar-table">
+                    <thead>
+                        <tr>
+                            <th>Sun</th>
+                            <th>Mon</th>
+                            <th>Tue</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Toggle sidebar function
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('active');
+    }
+
+    // Show specific section
+    function showSection(section) {
+        const sections = ['appointments', 'upload-prescription', 'view-patients', 'calendar'];
+        sections.forEach(sec => {
+            document.getElementById(sec).style.display = (sec === section) ? 'block' : 'none';
+        });
+    }
+
+    // Load doctor name from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+        let userName = localStorage.getItem('userName') || 'Doctor';
+        document.getElementById('user-name').textContent = userName;
+
+        // Sample appointments
+        const appointments = [
+            { time: '09:00 AM', patientName: 'Rahul Verma', reason: 'Routine Check-up', status: 'Pending' },
+            { time: '10:30 AM', patientName: 'Anjali Gupta', reason: 'Cardiology Consultation', status: 'Completed' },
+            { time: '01:00 PM', patientName: 'Vikram Singh', reason: 'Follow-up on Surgery', status: 'Pending' },
+            { time: '03:00 PM', patientName: 'Priya Mehta', reason: 'Routine Consultation', status: 'Pending' },
+            { time: '05:00 PM', patientName: 'Neha Sharma', reason: 'New Patient Consultation', status: 'Completed' }
+        ];
+
+        // Populate appointments
+        const appointmentsList = document.getElementById('appointments-list');
+        appointments.forEach((app, index) => {
+            const appointmentRow = document.createElement('tr');
+            appointmentRow.innerHTML = `
+                <td>${app.time}</td>
+                <td>${app.patientName}</td>
+                <td>${app.reason}</td>
+                <td>
+                    <select class="status-select" onchange="updateAppointmentStatus(this, ${index})">
+                        <option value="Pending" ${app.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Completed" ${app.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </td>
+                <td><button class="delete-btn" onclick="deleteAppointment(${index})">Delete</button></td>
+            `;
+            appointmentsList.appendChild(appointmentRow);
+        });
+
+        // Load patients (sample data)
+        const patients = [
+    { name: 'Rahul Verma', age: 30, condition: 'Routine Check-up', status: 'Pending' },
+    { name: 'Anjali Gupta', age: 45, condition: 'Cardiology Consultation', status: 'Completed' },
+    { name: 'Vikram Singh', age: 50, condition: 'Follow-up on Surgery', status: 'Pending' },
+    { name: 'Sita Sharma', age: 60, condition: 'Heart Failure Evaluation', status: 'Pending' },
+    { name: 'Ravi Kumar', age: 55, condition: 'Angina Assessment', status: 'Completed' },
+    { name: 'Neha Joshi', age: 38, condition: 'Hypertension Management', status: 'Pending' },
+    { name: 'Amit Desai', age: 65, condition: 'Arrhythmia Diagnosis', status: 'Pending' },
+    { name: 'Pooja Mehta', age: 52, condition: 'Cholesterol Screening', status: 'Completed' },
+    { name: 'Karan Patel', age: 47, condition: 'Stress Test', status: 'Pending' },
+    { name: 'Tanya Reddy', age: 41, condition: 'Echocardiogram', status: 'Completed' },
+    { name: 'Rajesh Nair', age: 59, condition: 'Coronary Angiogram', status: 'Pending' },
+    { name: 'Sneha Iyer', age: 48, condition: 'Heart Valve Evaluation', status: 'Completed' }
+];
+
+        // Populate patients
+        const patientsList = document.getElementById('patients-list');
+        patients.forEach((patient, index) => {
+            const patientRow = document.createElement('tr');
+            patientRow.innerHTML = `
+                <td>${patient.name}</td>
+                <td>${patient.age}</td>
+                <td>${patient.condition}</td>
+                <td>
+                    <select class="status-select" onchange="updatePatientStatus(this)">
+                        <option value="Pending" ${patient.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option value="Completed" ${patient.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </td>
+                <td><button class="delete-btn" onclick="deletePatient(${index})">Delete</button></td>
+            `;
+            patientsList.appendChild(patientRow);
+        });
+
+        // Handle prescription image upload
+        const uploadForm = document.getElementById('upload-prescription-form');
+        const imageInput = document.getElementById('prescription-image');
+        const imagePreview = document.getElementById('image-preview');
+
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imagePreview.src = event.target.result;
+                    imagePreview.style.display = 'block'; // Show the image preview
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        uploadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const patientName = uploadForm[0].value;
+            document.getElementById('upload-message').textContent = `Prescription for ${patientName} uploaded successfully!`;
+            uploadForm.reset();
+            imagePreview.style.display = 'none'; // Hide the image preview after upload
+        });
+
+        // Calendar functionality
+        const calendarBody = document.getElementById("calendar-body");
+        const currentMonthYear = document.getElementById("currentMonthYear");
+        const prevMonthButton = document.getElementById("prevMonth");
+        const nextMonthButton = document.getElementById("nextMonth");
+
+        let today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        function renderCalendar(month, year) {
+            calendarBody.innerHTML = "";
+            currentMonthYear.textContent = `${monthNames[month]} ${year}`;
+
+            const firstDay = new Date(year, month).getDay();
+            const daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+            let date = 1;
+            for (let i = 0; i < 6; i++) {
+                let row = document.createElement("tr");
+
+                for (let j = 0; j < 7; j++) {
+                    let cell = document.createElement("td");
+                    if (i === 0 && j < firstDay) {
+                        cell.classList.add("empty-cell");
+                    } else if (date > daysInMonth) {
+                        break;
+                    } else {
+                        cell.textContent = date;
+                        cell.classList.add("date-cell");
+                        // Example: mark today
+                        if (
+                            date === today.getDate() &&
+                            year === today.getFullYear() &&
+                            month === today.getMonth()
+                        ) {
+                            cell.classList.add("today");
+                        }
+                        date++;
+                    }
+                    row.appendChild(cell);
+                }
+                calendarBody.appendChild(row);
+            }
+        }
+
+        prevMonthButton.addEventListener("click", () => {
+            currentMonth = (currentMonth - 1 + 12) % 12;
+            if (currentMonth === 11) currentYear--;
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        nextMonthButton.addEventListener("click", () => {
+            currentMonth = (currentMonth + 1) % 12;
+            if (currentMonth === 0) currentYear++;
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        renderCalendar(currentMonth, currentYear);
+    });
+
+    // Update appointment status
+    function updateAppointmentStatus(selectElement, index) {
+        const selectedValue = selectElement.value;
+        console.log(`Appointment ${index + 1} status updated to: ${selectedValue}`);
+        // Here you can add additional logic to handle the status update
+    }
+
+    // Delete appointment
+    function deleteAppointment(index) {
+        const appointmentsList = document.getElementById('appointments-list');
+        appointmentsList.deleteRow(index);
+        console.log(`Appointment ${index + 1} deleted`);
+    }
+
+    // Update patient status
+    function updatePatientStatus(selectElement) {
+        const selectedValue = selectElement.value;
+        console.log(`Patient status updated to: ${selectedValue}`);
+        // Here you can add additional logic to handle the status update
+    }
+
+    // Delete patient
+    function deletePatient(index) {
+        const patientsList = document.getElementById('patients-list');
+        patientsList.deleteRow(index);
+        console.log(`Patient${index+1} deleted`);
+    }
+
+    // Logout function
+    function logout() {
+        localStorage.clear();
+        location.href = 'login.html';
+    }
+
+    // Filter appointments based on status
+    function filterAppointments() {
+        const filterValue = document.getElementById('filter-status').value;
+        const appointmentRows = document.querySelectorAll('#appointments-list tr');
+
+        appointmentRows.forEach(row => {
+            const statusSelect = row.querySelector('.status-select');
+            const status = statusSelect.value;
+
+            if (filterValue === 'all' || status === filterValue) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>
+</body>
+</html>

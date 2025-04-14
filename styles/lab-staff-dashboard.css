@@ -1,0 +1,273 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e8f4f8; /* Light blue background for a clean look */
+            display: flex;
+            height: 100vh;
+        }
+
+        .background-box {
+            background-color: white;
+            margin: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
+        .sidebar {
+            height: 80%; /* Adjusted height to 80% of the viewport */
+            width: 250px;
+            position: fixed;
+            top: 10%; /* Centering the sidebar vertically */
+            left: -250px;
+            background-color: #004d40; /* Dark teal for sidebar */
+            color: white;
+            transition: 0.3s;
+            overflow-x: hidden;
+            padding-top: 3rem; /* Increased padding-top for space */
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin: 0;
+            padding-top: 2rem; /* Added padding to push title down */
+        }
+
+        .opt-but {
+            display: block;
+            background-color: #00796b; /* Teal color for buttons */
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            text-align: center;
+            margin: 0.5rem auto;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease;
+            width: calc(100% - 2rem);
+            box-sizing: border-box;
+        }
+
+        .opt-but:hover {
+            background-color: #004d40; /* Darker teal for hover effect */
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: red;
+            color: white;
+            padding: 1rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: auto; /* Pushes the button to the bottom */
+            width: 100%; /* Makes the button cover the entire width */
+            position: absolute;
+            bottom: 0; /* Aligns the button to the bottom of the sidebar */
+        }
+
+        .logout-btn:hover {
+            background-color: #b30000;
+        }
+
+        .main-content {
+            margin-left: 0;
+            transition: margin-left 0.3s;
+            flex: 1;
+            padding: 2rem;
+            width: 100%;
+        }
+
+        .header {
+            background-color: #004d40; /* Matching header color with sidebar */
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .header .open-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header button {
+            background-color: #00796b; /* Matching button color with sidebar */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+
+        .header button:hover {
+            background-color: #004d40; /* Matching hover color with sidebar button hover */
+        }
+
+        .content {
+            padding:  2rem;
+        }
+
+        /* Additional styling for sections */
+        .test-requests-container,
+        .test-results-container,
+        .upload-test-reports-container,
+        .manage-inventory-container,
+        .laboratory-schedule-container {
+            background-color: white; /* White background for sections */
+            border-radius: 0.5rem; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            padding: 1.5rem; /* Padding for content */
+            margin-bottom: 2rem; /* Space between sections */
+        }
+
+        .test-requests-header,
+        .test-results-header,
+        .upload-test-reports-header,
+        .manage-inventory-header,
+        .laboratory-schedule-header {
+            font-size: 1.5rem; /* Header font size */
+            margin-bottom: 1rem; /* Space below headers */
+            color: #004d40; /* Header color matching the theme */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00796b; /* Header color for table */
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.3rem;
+        }
+
+        .delete-btn:hover {
+            background-color: #b30000;
+        }
+
+        .inventory-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .inventory-item input {
+            width: 60px;
+            margin-left: 1rem;
+        }
+
+        .status-btn {
+            margin-left: 1rem;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.3rem;
+        }
+
+        .status-btn:hover {
+            background-color: #004d40;
+        }
+
+        /* Styling for Upload Test Reports section */
+        .upload-test-reports-container {
+            border: 1px solid #00796b; /* Border to define the section */
+            padding: 2rem; /* Increased padding for better spacing */
+        }
+
+        .upload-test-reports-form input {
+            width: calc(100% - 1rem);
+            padding: 0.5rem;
+            margin-bottom: 1rem; /* Space between inputs */
+            border: 1px solid #ccc;
+            border-radius: 0.3rem;
+        }
+
+        .upload-test-reports-form button {
+            background-color: #00796b; /* Button color */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-test-reports-form button:hover {
+            background-color: #004d40; /* Darker button on hover */
+        }
+
+        #upload-message {
+            margin-top: 1rem;
+            color: green; /* Success message color */
+        }
+
+        /* Styling for detailed test results */
+        .detailed-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #00796b; /* Border for detailed results */
+            border-radius: 0.5rem;
+            background-color: #f0f8ff; /* Light background for contrast */
+        }
+
+        .generate-report-btn {
+            background-color: #00796b; /* Button color for report generation */
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 0.3rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .generate-report-btn:hover {
+            background-color: #004d40; /* Darker button on hover */
+        }

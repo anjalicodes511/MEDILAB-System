@@ -1,0 +1,185 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4faff;
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  height: 80%;
+  width: 250px;
+  position: fixed;
+  top: 10%;
+  left: -250px;
+  background-color: #003d79;
+  color: white;
+  transition: 0.3s;
+  overflow-x: hidden;
+  padding-top: 2.5rem; /* Adjusted padding-top for better spacing */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 0.5rem; /* Adjusted position */
+  right: 0.5rem; /* Adjusted position */
+  font-size: 1.5rem;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin: 1.5rem 0 2rem 0; /* Added margin to push the text down */
+  font-size: 1.2rem;
+}
+
+.opt-but {
+  display: block;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  margin: 0.5rem auto;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  width: calc(100% - 2rem);
+  box-sizing: border-box;
+}
+
+.opt-but:hover {
+  background-color: #004d40;
+}
+
+/* Logout button styling */
+.logout-btn {
+  background-color: red;
+  color: white;
+  margin-top: auto;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #b30000;
+}
+
+.main-content {
+  margin-left: 0;
+  transition: margin-left 0.3s;
+  flex: 1;
+  padding: 2rem;
+  width: 100%;
+}
+
+.header {
+  background-color: #003d79;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+.header .open-btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.content {
+  padding: 2rem;
+}
+
+/* Add some basic styling for the schedule section */
+.schedule-container {
+  margin: 20px;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.appointment {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: white;
+  border-left: 4px solid #2980b9;
+  border-radius: 4px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment .time {
+  font-weight: bold;
+}
+
+.appointment .details {
+  margin-left: 10px }
+
+/* Styles for the upload prescription section */
+.upload-prescription-container,
+.view-patients-container {
+  display: none; /* Initially hidden */
+  margin: 20px;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.upload-prescription-header,
+.view-patients-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Basic styles for form elements */
+.upload-prescription-form input,
+.upload-prescription-form button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: calc(100% - 22px);
+  box-sizing: border-box;
+}
+
+/* Styles for uploaded image preview */
+.image-preview {
+  margin-top: 10px;
+  max-width: 300px;
+  max-height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: none; /* Hidden by default */
+}

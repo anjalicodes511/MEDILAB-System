@@ -1,0 +1,266 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #e0f2f1; /* Light background color */
+}
+
+/* Header styles */
+header {
+  background-color: #004d40; /* Primary color */
+  color: #ffffff;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+}
+
+/* Icons for filter and cart */
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.icon {
+  cursor: pointer;
+  background-color: #004d40;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.icon:hover {
+  background-color: #00796b;
+}
+
+/* Search input */
+#searchInput {
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 1rem;
+  border: 2px solid #004d40;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+  border-color: #00796b; /* Lighter shade of primary color on focus */
+  outline: none;
+}
+
+/* Filter dropdown styling */
+.filter-dropdown {
+  position: absolute;
+  top: 70px; /* Adjust based on header height */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #004d40;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.filter-dropdown button {
+  padding: 0.5rem 1rem;
+  background-color: #004d40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-dropdown button:hover {
+  background-color: #00796b;
+}
+
+/* Main content area */
+main {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  animation: fadeIn 1s ease-in;
+}
+
+/* Neumorphism effect for table cells */
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Header cell styling - No neumorphism effect */
+th {
+  background-color: #004d40; /* Primary color */
+  color: #ffffff;
+  font-weight: bold;
+  box-shadow: none; /* Remove neumorphism effect */
+}
+
+/* Row styles for stock status */
+/* Status colors */
+td.in-stock {
+  color: #057030; /* Green color for in stock */
+  font-weight: bold;
+  background-color: #e0f7e4; /* Light green background */
+}
+
+td.out-of-stock {
+  color: #c60808; /* Red color for out of stock */
+  font-weight: bold;
+  background-color: #ffe0e0; /* Light red background */
+}
+
+td.low-stock {
+  color: #ff6f00; /* Orange color for low stock */
+  font-weight: bold;
+  background-color: #fff3e0; /* Light orange background */
+}
+
+/* Neumorphism hover effect for table rows */
+tr:hover td {
+  box-shadow: 6px 6px 12px #b0bec5, -6px -6px 12px #ffffff;
+  background-color: #f1f8f3; /* Light green background on hover */
+  transform: scale(1.02); /* Slight zoom effect */
+}
+
+/* Cart modal styling */
+.cart-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #004d40;
+  padding: 2rem;
+  border-radius: 8px;
+  z-index: 100;
+  width: 300px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Cart item list */
+#cartItems {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+#cartItems li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+.modal-buttons-container {
+  display: flex;
+  justify-content: space-between; /* Positions buttons on opposite ends */
+  margin-top: 20px; /* Adds space between the list and the buttons */
+}
+/* Close button styling */
+#closeCart {
+  padding: 0.5rem 1rem;
+  background-color: #991111;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#closeCart:hover {
+  background-color: #bd3029;
+}
+.buy-button {
+  padding: 0.5rem 1rem;
+  background-color: #004d40;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #00796b;
+}
+
+/* Animation for table */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+#cartItems li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.cart-item-info {
+  flex-grow: 1; /* Ensures the text takes up remaining space */
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+}
+
+.edit-icon {
+  color: blue;
+}
+
+.delete-icon {
+  color: red;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  th,
+  td {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+}
+.edit-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  color: blue;
+}
+
+.delete-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  color: red;
+}

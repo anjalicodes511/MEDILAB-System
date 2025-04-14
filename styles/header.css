@@ -1,0 +1,83 @@
+:root{
+  --background: rgb(255, 255, 255);
+  --base-color: rgb(47, 120, 189);
+  --aura: rgb(209, 152, 109);
+  --nav-color: rgb(13, 44, 73);
+}
+.medilab-header{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  background-color: var(--nav-color);
+  color: white;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.medilab-header-left-section{
+  margin: 0;
+  display: flex;
+  height:100%;
+  cursor: pointer;
+}
+.home-page-link{
+  height: 100%;
+  background-color: var(--nav-color);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  border: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-page-link svg{
+  fill: var(--base-color);
+
+}
+.home-page-link:hover{
+  background-color: var(--base-color);
+}
+.home-page-link:hover svg{
+  fill: var(--nav-color);
+}
+.medilab-header-middle-section{
+  display: block;
+  width: 100%;
+  margin: 0;
+}
+.medilab-app-name{
+  display: flex;
+  justify-content: center;
+  background-color: var(--nav-color);
+  margin: 0;
+  letter-spacing: 2px;
+  font-size: 'Roboto',sans-serif;
+  font-weight: 1200;
+  font-size: 48px;
+  color: var(--base-color);
+  -webkit-text-stroke: 2px var(--background);
+
+}
+.medilab-header-left-section .home-name-tool{
+  background-color: var(--nav-color);
+  color: white;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 800;
+  font-family: Roboto, Arial;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  position: absolute;
+  bottom: -30px;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: 0.15s;
+}
+.medilab-header-left-section:hover .home-name-tool{
+  opacity: 1;
+}
